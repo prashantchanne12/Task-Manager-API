@@ -78,7 +78,11 @@ userRouter.post('/users/logoutAll', auth, async (req, res, next) => {
 
 // When someone makes GET request to /users it will first go through the auth middleware and then it will run our route handler
 userRouter.get('/users/me', auth, async (req, res, next) => {
-    res.send(req.user);
+    try {
+        res.send(req.user);
+    } catch (err) {
+        res.status(404).send(err);
+    }
 });
 
 // userRouter.get('/users/:id', async (req, res, next) => {
